@@ -1,7 +1,7 @@
 <div class="container p-4">
     <div class="row">
         {{#each links}}
-        <div class="col-md-3">
+        <div class="col-md-3 p-4">
             <div class="card text-center">
                 <div class="card-body">
                     <a href="{{url}}" target="_blank">
@@ -9,7 +9,7 @@
                     </a>
                     <p class="m-2">{{description}}</p>
                     <p>{{timeago created_at}}</p>
-                    <a href="/links/delete/{{id}}" class="btn btn-danger">Delete Link</a>
+                    <a href="/links/delete/{{id}}" class="btn btn-danger">Delete</a>
                     <a href="/links/edit/{{id}}" class="btn btn-secondary">Edit</a>
                 </div>
             </div>
