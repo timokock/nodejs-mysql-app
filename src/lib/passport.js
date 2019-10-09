@@ -9,13 +9,9 @@ passport.use('local.signin', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, username, password, done) => {
-
     const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
-
     if(rows.length > 0) {
         const user = rows[0];
-        console.log(user);
-        
         const validatedPassword = await helpers.matchPassword(password, user.password);
         if(validatedPassword) {
             done(null, user, req.flash('success', 'Welcome ' + user.fullname));
@@ -26,7 +22,6 @@ passport.use('local.signin', new LocalStrategy({
         return done(null, false, req.flash('message', 'Username doesn´t exists'));
     }
 }));
-
 
 passport.use('local.signup', new LocalStrategy({
     usernameField: 'username',
@@ -40,10 +35,9 @@ passport.use('local.signup', new LocalStrategy({
         fullname
     };
     newUser.password = await helpers.encryptPassword(password);
-    const result = await pool.query('INSERT INTO users SET ? ', newUser);
+    const result = await pool.query('INSERT INTO users SET ?', newUser);
     newUser.id = result.insertId;
     return done(null, newUser);
-    
 }));
 
 passport.serializeUser((user, done) => {
